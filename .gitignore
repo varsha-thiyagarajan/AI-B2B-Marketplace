@@ -1,0 +1,82 @@
+# =========================
+# Maven
+# =========================
+target/
+*.class
+
+# Keep Maven Wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+*.iws
+*.ipr
+
+
+# =========================
+# Spring Boot / Local Secrets
+# =========================
+application-local.properties
+application-local.yml
+
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
+
+
+# =========================
+# Next.js / Node
+# =========================
+node_modules/
+.next/
+out/
+
+
+# =========================
+# Logs
+# =========================
+*.log
+
+
+# =========================
+# Operating System
+# =========================
+.DS_Store
+Thumbs.db
+
+
+# =========================
+# Eclipse / STS
+# =========================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+
+# =========================
+# NetBeans
+# =========================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+
+# =========================
+# VS Code
+# =========================
+.vscode/

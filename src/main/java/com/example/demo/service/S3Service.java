@@ -1,0 +1,38 @@
+package com.example.demo.service;
+
+import com.example.demo.bucket.BucketName;
+import lombok.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
+import java.io.IOException;
+import java.util.UUID;
+
+@Service
+public class S3Service {
+
+    private final S3Client s3Client;
+    String bucketName = BucketName.PRODUCT_IMAGE.getBucketName();
+    public S3Service(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+    public String uploadFile(MultipartFile file) throws IOException
+    {
+        String fileName="products/"+ UUID.randomUUID()+"-"+file.getOriginalFilename();
+        PutObjectRequest request = PutObjectRequest.builder()
+                .bucket(BucketName.PRODUCT_IMAGE.getBucketName())
+                .key(fileName)
+                .contentType(file.getContentType())
+                .build();
+        s3Client.putObject(
+                request,
+                RequestBody.fromBytes(file.getBytes())
+        );
+        return fileName;
+    }
+
+
+}

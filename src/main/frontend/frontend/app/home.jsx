@@ -1,10 +1,17 @@
 "use client";
-
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
+const [user, setUser] = useState(null);
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
 
+  if (storedUser) {
+    setUser(JSON.parse(storedUser));
+  }
+}, []);
   const categories = [
     {
       name: "Electronics",
@@ -146,24 +153,44 @@ export default function Home() {
 
 
           {/* Authentication */}
+{user ? (
+  <div className="flex items-center gap-3">
 
-          <div className="flex items-center gap-3">
+    <button
+      onClick={() => router.push("/products")}
+      className="px-5 py-3 rounded-xl border border-slate-300 text-slate-800 text-base font-semibold hover:border-blue-500 hover:text-blue-600 transition"
+    >
+      View Products
+    </button>
 
-            <button
-              onClick={() => router.push("/login")}
-              className="px-5 py-3 rounded-xl border border-slate-300 text-slate-800 text-base font-semibold hover:border-blue-500 hover:text-blue-600 transition"
-            >
-              Login
-            </button>
+    <button
+      onClick={() => router.push("/products/new")}
+      className="px-5 py-3 rounded-xl bg-blue-600 text-white text-base font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-500/20"
+    >
+      + Add Product
+    </button>
 
-            <button
-              onClick={() => router.push("/register")}
-              className="px-5 py-3 rounded-xl bg-blue-600 text-white text-base font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-500/20"
-            >
-              Register
-            </button>
+  </div>
+) : (
+  <div className="flex items-center gap-3">
 
-          </div>
+    <button
+      onClick={() => router.push("/login")}
+      className="px-5 py-3 rounded-xl border border-slate-300 text-slate-800 text-base font-semibold hover:border-blue-500 hover:text-blue-600 transition"
+    >
+      Login
+    </button>
+
+    <button
+      onClick={() => router.push("/register")}
+      className="px-5 py-3 rounded-xl bg-blue-600 text-white text-base font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-500/20"
+    >
+      Register
+    </button>
+
+  </div>
+)}
+         
 
         </div>
 

@@ -41,7 +41,16 @@ export default function LoginPage() {
             }
 
             console.log("Logged in user:", data);
-
+            localStorage.setItem("token", data.token);
+localStorage.setItem(
+  "user",
+  JSON.stringify({
+    id: data.id,
+    name: data.name,
+    email: data.email,
+    role: data.role,
+  })
+);
             router.push("/");
 
         } catch (error) {

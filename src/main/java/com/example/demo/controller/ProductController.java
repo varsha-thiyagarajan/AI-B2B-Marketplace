@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Product;
+import com.example.demo.response.ProductResponse;
 import com.example.demo.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,44 +15,61 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    public ProductController(ProductService productService)
-    {
-        this.productService=productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
+
     @PostMapping
-    public ResponseEntity<Product> createProduct(
-            @RequestBody Product product
-    )
-    {
-        Product savedProduct=productService.createProduct(product);
+    public ResponseEntity<ProductResponse> createProduct(
+            @RequestBody Product product) {
+
+        ProductResponse savedProduct =
+                productService.createProduct(product);
+
         return ResponseEntity.ok(savedProduct);
     }
-    @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
 
-        List<Product> products = productService.getAllProducts();
+    @GetMapping
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+
+        List<ProductResponse> products =
+                productService.getAllProducts();
+
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/seller/{sellerId}")
+    public ResponseEntity<List<ProductResponse>> getProductsBySeller(
+            @PathVariable Long sellerId) {
+
+        List<ProductResponse> products =
+                productService.getProductsBySeller(sellerId);
 
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(
+    public ResponseEntity<ProductResponse> getProductById(
             @PathVariable Long id) {
 
-        Product product = productService.getProductById(id);
+        ProductResponse product =
+                productService.getProductById(id);
 
         return ResponseEntity.ok(product);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(
+    public ResponseEntity<ProductResponse> updateProduct(
             @PathVariable Long id,
             @RequestBody Product product) {
 
-        Product updatedProduct =
+        ProductResponse updatedProduct =
                 productService.updateProduct(id, product);
 
         return ResponseEntity.ok(updatedProduct);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(
             @PathVariable Long id) {
@@ -62,15 +80,14 @@ public class ProductController {
     }
 
     @PostMapping("/{id}/image")
-    public ResponseEntity<Product> uploadProductImage(
+    public ResponseEntity<ProductResponse> uploadProductImage(
             @PathVariable Long id,
             @RequestParam("file") MultipartFile file)
             throws IOException {
 
-        Product product =
+        ProductResponse product =
                 productService.uploadProductImage(id, file);
 
         return ResponseEntity.ok(product);
     }
-
 }
